@@ -1,16 +1,15 @@
 const { BaseSwagLabPage } = require('./BaseSwagLab.page');
+import { getItemsListData } from '../helper_func';
 
 export class ShopingCartPage extends BaseSwagLabPage {
     url = '/cart.html';
-
-    cartItemSelector = '.cart_item';
-
     removeItemSelector = '[id^="remove"]';
-
     get headerTitle() { return this.page.locator('.title'); }
 
-    get cartItems() { return this.page.locator(this.cartItemSelector); }
+    get cartItems() { return this.page.locator('.cart_item'); }
 
+    get checkoutButton() { return this.page.locator('#checkout'); }
+    
     // async below added to show the function returns a promise
     async getCartItemByName(name) { return this.page.locator(this.cartItemSelector, { hasText: name }); }
 
@@ -21,5 +20,8 @@ export class ShopingCartPage extends BaseSwagLabPage {
 
     async removeCartItemById(id) {
         await this.cartItems.nth(id).locator(this.removeItemSelector).click();
+    }
+    async getCartItemsList() {
+        return getItemsListData(await this.cartItems.all());
     }
 }
