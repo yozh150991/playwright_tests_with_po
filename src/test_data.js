@@ -1,4 +1,4 @@
-export const filterOption = [
+export const filterOptions = [
     {name: 'az',
     description: 'sorting on the Inventory page from A to Z'}, 
     {name: 'za',

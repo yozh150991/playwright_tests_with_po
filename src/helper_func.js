@@ -13,10 +13,14 @@ export function sortItems(itemList, sortMethod){
     }
 }
 
-export function calculateRandomIndexItems(amount){
-    let selectIndexItems= new Set([]);
-    while (selectIndexItems.size < amount) {
-        const randomIndex = Math.floor(Math.random() * amount);
+export function calculateRandomIndexItems(amountOfItems){
+    let randomAmount = 0;
+        while (randomAmount === 0) {
+            randomAmount = Math.floor(Math.random() * amountOfItems);
+        }
+    let selectIndexItems= new Set();
+    while (selectIndexItems.size < randomAmount ) {
+        const randomIndex = Math.floor(Math.random() * amountOfItems);
         selectIndexItems.add(randomIndex);
     }
     return Array.from(selectIndexItems);

@@ -7,10 +7,7 @@ import { CheckoutPageStepTwo } from './pages/CheckoutPageStepTwo.page';
 
 export const test = base.extend({
     loginPage: async ({ page }, use) => {
-        const loginPage = new LoginPage(page)
-        await loginPage.navigate();
-        await loginPage.performLogin('standard_user', 'secret_sauce');
-        await use(loginPage);
+        await use(new LoginPage(page));;
     },
     inventoryPage: async ({ page }, use) => {
         await use(new InventoryPage(page));
