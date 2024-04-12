@@ -6,9 +6,8 @@ import {userData, userCredentials} from '../user_data';
 
 test.describe('Verify sorting and adding products', () => {
     test.beforeEach(async ({ loginPage}) => {
-        const user = userCredentials;
         await loginPage.navigate();
-        await loginPage.performLogin(user.username, user.password);
+        await loginPage.performLogin(userCredentials.username, userCredentials.password);
     });
     for (const option of filterOptions) {
         test(`Perform and verify ${option.description}`, async ({ inventoryPage }) => {
@@ -28,9 +27,9 @@ test.describe('Verify sorting and adding products', () => {
         const itemsAddedToCart = await shopingCartPage.getCartItemsList();
         for (const i of randomIndexItems) {
             const k = randomIndexItems.indexOf(i);
-            expect(await inventoryItemsAvailable[i].name).toEqual(itemsAddedToCart[k].name);
-            expect(await inventoryItemsAvailable[i].description).toEqual(itemsAddedToCart[k].description);
-            expect(await inventoryItemsAvailable[i].price).toEqual(itemsAddedToCart[k].price);
+            expect(inventoryItemsAvailable[i].name).toEqual(itemsAddedToCart[k].name);
+            expect(inventoryItemsAvailable[i].description).toEqual(itemsAddedToCart[k].description);
+            expect(inventoryItemsAvailable[i].price).toEqual(itemsAddedToCart[k].price);
         }
     })
     test('Verify adding products to cart their price during checkout', async ({ inventoryPage, shopingCartPage, checkoutPageStepOne, checkoutPageStepTwo }) => {
@@ -40,14 +39,13 @@ test.describe('Verify sorting and adding products', () => {
         await inventoryPage.addRandomItemsToCart(randomIndexItems);
         await inventoryPage.openShoppingCart();
         await shopingCartPage.checkoutButton.click();
-        const user = userData;
-        await checkoutPageStepOne.fillConfirmCheckout(user.firstName, user.lastName, user.zipCode);
+        await checkoutPageStepOne.fillConfirmCheckout(userData.firstName, userData.lastName, userData.zipCode);
         const checkoutPageItems = await checkoutPageStepTwo.getCheckoutItemsList();
         for (const i of randomIndexItems) {
             const k = randomIndexItems.indexOf(i);
-            expect(await inventoryItemsAvailable[i].name).toEqual(checkoutPageItems[k].name);
-            expect(await inventoryItemsAvailable[i].description).toEqual(checkoutPageItems[k].description);
-            expect(await inventoryItemsAvailable[i].price).toEqual(checkoutPageItems[k].price);
+            expect(inventoryItemsAvailable[i].name).toEqual(checkoutPageItems[k].name);
+            expect(inventoryItemsAvailable[i].description).toEqual(checkoutPageItems[k].description);
+            expect(inventoryItemsAvailable[i].price).toEqual(checkoutPageItems[k].price);
         }
         await expect(checkoutPageStepTwo.summaryInfo).toBeVisible();
         const itemTotalPriceActual = await checkoutPageStepTwo.getItemTotal();
